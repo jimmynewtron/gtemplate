@@ -1,15 +1,18 @@
 {
-	"name": "my-lib",
-	"description": "It's a...",
+	"name": "gtemplate",
+	"description": "Generic Javascript templating module",
 
 	"version": "0.0.1",
 	"author": {
-		"name": "Hey You",
-		"email": "me@example.com"
+		"name": "Darlan Alves",
+		"email": "darlan@moovia.com"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/here-is/my-lib.git"
+		"url": "https://github.com/jimmynewtron/gtemplate.git"
+	},
+	"dependencies": {
+		"extends": "0.0.1"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.1",
