@@ -18,7 +18,7 @@ var result = tpl.render({
 });
 
 ```
-**registerProcessor(matcher, fn)**
+**Template.registerProcessor(matcher, fn)**
 
 Registers a shared processor
 
@@ -32,3 +32,7 @@ If processor is omitted, the matched string will be evaluated instead
 
 - data: JSON with data to render
 - scope: the object to use as scope into template function (optional)
+
+**Template.create(code)**
+
+Returns a new instance of Template using the code specified.

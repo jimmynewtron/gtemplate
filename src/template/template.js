@@ -21,21 +21,31 @@ var slice = Array.prototype.slice;
 
 /**
  * @class Template
+ * @constructor
+ * @param {String} code
  */
 
 function Template(code, options) {
 	this.compiled = false;
-	this.options = options || {};
+	//this.options = options || {};
 	this.setSource(code || '', false);
 };
 
 Template.processors = [];
-
 var p = Template.prototype;
 
 /**
+ * Factory to templates. Does the same of constructor method
+ * @param
+ */
+Template.create = function(code, options) {
+	return new Template(code, options);
+};
+
+/**
  * Sets template source
- * @param {String} source
+ * @param {String} source			Template source
+ * @param {Boolean} recompile		True to auto-compile the new source
  * @return this
  */
 p.setSource = function(source, recompile) {

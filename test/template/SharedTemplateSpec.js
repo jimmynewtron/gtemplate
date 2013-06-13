@@ -48,4 +48,8 @@ describe('Generic Template tests', function() {
 			tpl.render();
 		}).not.toThrow();
 	});
+
+	it("should create a new template with Template.create", function() {
+		expect(Template.create() instanceof Template).toBe(true);
+	});
 });
