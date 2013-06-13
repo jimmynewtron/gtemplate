@@ -102,7 +102,7 @@ p.compile = function() {
 
 	index = 0;
 	var source = this.source,
-		fnBody = 'var __p=arguments[0],o=arguments[1]||{};return \'';
+		fnBody = 'var __a=function(v){return typeof v==="string"?v:""},__p=arguments[0],data=arguments[1]||{};return \'';
 
 	source.replace(re, function() {
 		var i = 0,
@@ -118,9 +118,9 @@ p.compile = function() {
 			if (args[i]) {
 				found = args[i];
 				if (processors[i].evaluate) {
-					fnBody += "'+((" + found + ")||'')+'";
+					fnBody += "'+__a(" + found + ")+'";
 				} else {
-					fnBody += "'+(__p[" + i + "].fn(o." + found + "||'')||'')+'";
+					fnBody += "'+__a(__p[" + i + "].fn(data." + found + "))+'";
 				}
 				break;
 			}
@@ -130,7 +130,6 @@ p.compile = function() {
 	});
 
 	fnBody += "';";
-
 	try {
 		this.fn = Function(fnBody);
 		this.compiled = true;
