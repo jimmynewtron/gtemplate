@@ -1,0 +1,9 @@
+Gruntfile.js
+src/*
+test/*
+README.md
+test.html
+node_modules
+.git
+.grunt
+.gitignore
