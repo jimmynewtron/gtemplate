@@ -24,11 +24,12 @@ var slice = Array.prototype.slice;
  */
 
 function Template(code, options) {
-	this.processors = [];
 	this.compiled = false;
 	this.options = options || {};
 	this.setSource(code || '', false);
 };
+
+Template.processors = [];
 
 var p = Template.prototype;
 
@@ -37,8 +38,11 @@ var p = Template.prototype;
  * @param {String} source
  * @return this
  */
-p.setSource = function(source, noCompile) {
+p.setSource = function(source, recompile) {
 	this.source = source;
+	if (recompile) {
+		this.compile();
+	}
 	return this;
 };
 
@@ -57,8 +61,11 @@ p.getSource = function() {
  * @return {String}
  */
 p.render = function(data, scope) {
-	if (!this.compiled) this.compile();
-	return this.fn.call(typeof scope === 'object' && scope !== null ? scope : this, this.processors, data);
+	if (!this.compiled) {
+		this.compile();
+	}
+
+	return this.fn.call(typeof scope === 'object' && scope !== null ? scope : this, Template.processors, data);
 };
 
 /**
@@ -67,7 +74,7 @@ p.render = function(data, scope) {
  * @param {Function} [processorFn]		If omitted, the matched code will be evaluated
  * @return this
  */
-p.registerProcessor = function(matcher, processorFn) {
+Template.registerProcessor = function(matcher, processorFn) {
 	this.processors.push({
 		matcher: matcher instanceof RegExp ? matcher.source : matcher,
 		evaluate: (typeof processorFn === 'undefined'),
@@ -83,7 +90,7 @@ p.registerProcessor = function(matcher, processorFn) {
  */
 p.compile = function() {
 	var index = 0,
-		processors = this.processors,
+		processors = Template.processors,
 		len = processors.length,
 		re = '',
 		p;
