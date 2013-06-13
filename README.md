@@ -1,4 +1,7 @@
-# Javascript Sample lib
+# Javascript lib skeleton
+
+Skeleton to a Javascript lib or node module.
+It has the needed files/settings to start coding, build and test.
 
 Are you ready to fork and start coding? Good!
 
