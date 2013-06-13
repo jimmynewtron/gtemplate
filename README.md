@@ -4,16 +4,15 @@ It does nothing useful out-of-box. It's meant to be used as a generic renderer.
 You need to register some RegExp matchers to actually run templates.
 
 ```
-var tpl = new Template('>> {{date}} :: {[console.log("ok")]}');
-
 // register a matcher to interpolate data
-tpl.registerProcessor(/\{\{([\s\S]+?)\}\}/, function(value) {
+Template.registerProcessor(/\{\{([\s\S]+?)\}\}/, function(value) {
 	return value.toString();
 });
 
 // register a matcher that will be evaluated as code
-tpl.registerProcessor(/\{\[([\s\S]+?)\]\}/);
+Template.registerProcessor(/\{\[([\s\S]+?)\]\}/);
 
+var tpl = Template.create('>> {{date}} :: {[console.log("ok")]}');
 var result = tpl.render({
 	date: new Date()
 });
@@ -21,7 +20,7 @@ var result = tpl.render({
 ```
 **registerProcessor(matcher, fn)**
 
-Registers a new processor
+Registers a shared processor
 
 - matcher: RegExp or RegExp string
 - processor: a function to evaluate and return a string

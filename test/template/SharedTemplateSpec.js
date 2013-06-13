@@ -2,6 +2,7 @@ describe('Generic Template tests', function() {
 	var tpl = null;
 
 	beforeEach(function() {
+		Template.processors = [];
 		tpl = new Template();
 	});
 
@@ -17,21 +18,21 @@ describe('Generic Template tests', function() {
 		expect(tpl.getSource()).toEqual(source);
 	});
 
-	it('should register a processor', function() {
+	it('should register a shared processor', function() {
 		var fn = function(v) {
 			return v;
 		};
 
 		var re = /.+/;
-		tpl.registerProcessor(re, fn);
-		expect(tpl.processors[0]).toBeDefined();
-		expect(tpl.processors[0].matcher).toEqual(re.source);
-		expect(tpl.processors[0].fn).toBe(fn);
+		Template.registerProcessor(re, fn);
+		expect(Template.processors[0]).toBeDefined();
+		expect(Template.processors[0].matcher).toEqual(re.source);
+		expect(Template.processors[0].fn).toBe(fn);
 	});
 
 	it('should build a basic template with interpolation', function() {
 		tpl.setSource('<tpl>{someString}, {someString}</tpl>');
-		tpl.registerProcessor(/[\{]{1}([\s\S]+?)[}]{1}/, function(v) {
+		Template.registerProcessor(/[\{]{1}([\s\S]+?)[}]{1}/, function(v) {
 			return v;
 		});
 
@@ -42,7 +43,7 @@ describe('Generic Template tests', function() {
 
 	it("should build a template with evaluated code", function() {
 		tpl.setSource('>>>{console.log("ok")}<<<');
-		tpl.registerProcessor(/[\{]{1}([\s\S]+?)[}]{1}/);
+		Template.registerProcessor(/[\{]{1}([\s\S]+?)[}]{1}/);
 		expect(function() {
 			tpl.render();
 		}).not.toThrow();
